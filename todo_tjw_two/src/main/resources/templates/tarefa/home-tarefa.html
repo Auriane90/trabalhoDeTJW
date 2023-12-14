@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Lista de Tarefas</title>
+
+<link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+<script th:src="@{/jquery/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	
+	<div class="container" th:insert="fragments/nav-todo :: nav-todo"></div>
+	
+	<br>
+	
+	<div class="container">
+		<div class="d-grid gap-2 d-md-flex">
+		  <a class="btn btn-outline-primary" type="button" th:href="@{/atividade/home/{id}(id=${usuario_id})}">Voltar para tela de Atividade</a>
+		</div>
+	</div>
+	
+	
+	<br>
+	
+	<div class="container">
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+		  <a class="btn btn-primary me-md-2" type="button" th:href="@{/tarefa/novo/{id}(id=${atividade_id})}">Cadastrar Tarefa</a>
+		</div>
+	</div>
+	
+	<br>
+	
+	<div class="container">
+	  <div class="row">
+	  	
+	    <div class="col">
+	    	<h1 style="text-align: center;">Lista de Tarefas</h1>
+		
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Descrição</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${tarefa.empty}">
+					<td colspan="2">Sem Tarefa</td>
+				</tr>
+				<tr th:each="tarefa : ${tarefa}">
+					<td><span th:text="${tarefa.descricao_tarefa}"> descricao_tarefa </span></td>
+					<td th:if="${!tarefa.situacao_tarefa}">
+						<a class="btn btn-warning" 
+						   th:href="@{/tarefa/concluido/{id}/{atividade_id}(id=${tarefa.id},atividade_id=${atividade_id})}">
+						   Marcar como concluido</a>
+					</td>
+					<td th:if="${tarefa.situacao_tarefa}">
+						<a class="btn btn-darc"
+						   th:href="@{/tarefa/desconcluido/{id}/{atividade_id}(id=${tarefa.id},atividade_id=${atividade_id})}">
+						   Desmarcar como concluido</a>
+					</td>
+					<td>
+						<a class="btn btn-success" 
+						   th:href="@{/tarefa/editar/{id}/{atividade_id}(id=${tarefa.id},atividade_id=${atividade_id})}">
+						   Editar</a>
+					</td>
+					<td>
+						<a class="btn btn-danger" 
+						   th:href="@{/tarefa/apagar/{id}/{atividade_id}(id=${tarefa.id},atividade_id=${atividade_id})}"
+						   th:data-confirm-delete="|Você gostaria de apagar ${tarefa.descricao_tarefa}?|"
+	  					   onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
+						   Apagar
+						</a>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>    
+	    </div>
+	    
+	  </div>
+	</div>
+	
+</body>
+</html>

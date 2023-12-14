@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Editar Atividade</title>
+
+<link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+<script th:src="@{/jquery/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	
+	<div class="container" th:insert="fragments/nav-todo-atividade :: nav-todo-atividade"></div>
+	
+	<div class="container">
+		  <div class="row">  	
+		    <div class="col">
+		    	<h2>Alterar Atividade</h2> 
+				<form th:action="@{/atividade/editar/{id}/{usuario_id}(id=${atividade.id},usuario_id=${usuario_id})}" th:object="${atividade}" method="post">
+					  
+					<div class="row mb-3">
+					    <label class="col-sm-1 col-form-label">Nome:</label>
+					    <div class="col-sm-5">
+					    	<input class="form-control" type="text" th:field="*{descricao_atividade}"> 
+					    </div>
+					    <div class="col-sm-5"> 
+					    	<span class="mensagem" th:if="${#fields.hasErrors('descricao_atividade')}" th:errors="*{descricao_atividade}"></span>
+					    </div>				
+					</div>
+					
+					<input  class="btn btn-primary" type="submit" value="Alterar"/>
+				</form>
+		    </div>
+		</div>
+		</div>
+
+
+</body>
+</html>

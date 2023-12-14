@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Cadastro De Atividade</title>
+
+<link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+<script th:src="@{/jquery/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	
+	<div class="container" th:insert="fragments/nav-todo-atividade :: nav-todo-atividade"></div>
+	
+	<div class="container">
+	  <div class="row">  	
+	    <div class="col">
+	    	<h2>Cadastro de atividade</h2>
+	    	<div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				<span th:text="${mensagem}"></span>
+			</div>
+			<form th:action="@{/atividade/salvar/{id}(id=${usuario_id})}" th:object="${atividade}" method="POST">
+				  
+				<div class="row mb-3">
+				    <label class="col-sm-1 col-form-label">Descrição:</label>
+				    <div class="col-sm-5">
+				    	<input class="form-control" type="text" th:field="*{descricao_atividade}"> 
+				    </div>
+				    <div class="col-sm-5"> 
+				    	<span class="mensagem" th:if="${#fields.hasErrors('descricao_atividade')}" th:errors="*{descricao_atividade}"></span>
+				    </div>				
+				</div>
+				<input type="hidden" id="id" th:field="*{id}"/>
+				
+				<input class="form-control" name="usuario_id" th:value="${usuario_id}" type="hidden" > 
+				
+				
+				<input  class="btn btn-primary" type="submit" value="Gravar"/>
+			</form>
+			
+	    </div>
+	</div>
+	</div>
+
+</body>
+</html>
